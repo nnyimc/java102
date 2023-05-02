@@ -10,14 +10,12 @@ public class Programmer {
     private String lastName;
     private String firstName;
     private LocalDate dateOfBirth;
-    private int linesOfCodePerDay;
-    private int experienceYears;
-    private int iq;
+    private double linesOfCodePerDay;
+    private double experienceYears;
+    private double iq;
 
-    private int salary = 3000;
+    private double salary = 3000;
 
-
-    //     Flinstone, Fred, 1/1/1900, Programmer, {linesOfCodePerDay=2000,experienceYears=10,iq=120}
     private final  String peopleRegex = "(?<lastName>\\w+),\\s*(?<firstName>\\w+),\\s*(?<dob>\\d{1,2}/\\d{1,2}/\\d{4}),\\s*(?<role>\\w+)(?:,\\s*\\{(?<details>.*)\\})\\n";
     private final Pattern pattern = Pattern.compile(peopleRegex);
     DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("d/M/yyyy");
@@ -40,8 +38,13 @@ public class Programmer {
         }
     }
 
-    public int getSalary() {
-            salary += salary/(linesOfCodePerDay+(iq/experienceYears));
+    public double getSalary() {
+            this.salary += salary/(linesOfCodePerDay+(iq/experienceYears));
         return salary;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s %s %s %s %s %n", lastName, firstName, experienceYears, linesOfCodePerDay, salary);
     }
 }
