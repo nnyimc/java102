@@ -5,7 +5,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Programmer {
+public class Programmer implements Employee {
 
     private String lastName;
     private String firstName;
@@ -39,12 +39,11 @@ public class Programmer {
     }
 
     public double getSalary() {
-            this.salary += salary/(linesOfCodePerDay+(iq/experienceYears));
-        return salary;
+            return this.salary += salary/(linesOfCodePerDay+(iq/experienceYears));
     }
 
     @Override
     public String toString() {
-        return String.format("%s %s %s %s %s %n", lastName, firstName, experienceYears, linesOfCodePerDay, salary);
+        return String.format("%s %s %s %s %s %n", lastName, firstName, experienceYears, linesOfCodePerDay, getSalary());
     }
 }

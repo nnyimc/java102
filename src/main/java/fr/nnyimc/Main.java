@@ -1,9 +1,6 @@
 package fr.nnyimc;
 
-import fr.nnyimc.model.Analyst;
-import fr.nnyimc.model.CEO;
-import fr.nnyimc.model.Manager;
-import fr.nnyimc.model.Programmer;
+import fr.nnyimc.model.*;
 
 import java.text.NumberFormat;
 import java.util.regex.Matcher;
@@ -27,27 +24,19 @@ public class Main {
 
 
         int totalSalaries = 0;
+        Employee employee = null;
+
         while (matcher.find()) {
-            float salary = 3000f;
-            totalSalaries += switch (matcher.group("role")) {
-                case "Programmer" -> {
-                    Programmer programmer = new Programmer(matcher.group());
-                    yield programmer.getSalary();
-                }
-                case "Manager" -> {
-                   Manager manager = new Manager(matcher.group());
-                   yield manager.getSalary();
-                }
-                case "Analyst" -> {
-                    Analyst analyst = new Analyst(matcher.group());
-                    yield analyst.getSalary();
-                }
-                case "CEO" -> {
-                    CEO ceo = new CEO(matcher.group());
-                    yield ceo.getSalary();
-                }
-                default -> 0;
+
+            employee = switch (matcher.group("role")) {
+                case "Programmer" -> new Programmer(matcher.group());
+                case "Manager" -> new Manager(matcher.group());
+                case "Analyst" -> new Analyst(matcher.group());
+                case "CEO" -> new CEO(matcher.group());
+                default -> null;
             };
+            System.out.println(employee.toString());
+            totalSalaries += employee.getSalary();
         }
 
         NumberFormat currencyInstance = NumberFormat.getCurrencyInstance();
