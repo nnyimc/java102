@@ -1,5 +1,7 @@
 package fr.nnyimc;
 
+import fr.nnyimc.model.Programmer;
+
 import java.text.NumberFormat;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -41,15 +43,8 @@ public class Main {
             float salary = 3000f;
             totalSalaries += switch (matcher.group("role")) {
                 case "Programmer" -> {
-                    Matcher programmerMatcher = programmerPattern.matcher(matcher.group("details"));
-                    if (programmerMatcher.find()) {
-                        int linesOfCodePerDay = Integer.parseInt(programmerMatcher.group("linesOfCodePerDay"));
-                        int yearsOfExperience = Integer.parseInt(programmerMatcher.group("experienceYears"));
-                        int iq = Integer.parseInt(programmerMatcher.group("iq"));
-                        System.out.printf("Programmer details: %n lines of code per day: %s%n years of experience: %s%n IQ: %s%n", linesOfCodePerDay, yearsOfExperience , iq);
-                        salary += salary/(linesOfCodePerDay+(iq/yearsOfExperience));
-                    }
-                    yield salary;
+                    Programmer programmer = new Programmer(matcher.group());
+                    yield programmer.getSalary();
                 }
                 case "Manager" -> {
                     Matcher managerMatcher = managerPattern.matcher(matcher.group("details"));
