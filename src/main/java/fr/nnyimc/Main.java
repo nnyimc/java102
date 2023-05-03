@@ -35,8 +35,10 @@ public class Main {
                 case "CEO" -> new CEO(matcher.group());
                 default -> null;
             };
-            System.out.println(employee.toString());
-            totalSalaries += employee.getSalary();
+            if (employee != null) {
+                System.out.println(employee);
+                totalSalaries += employee.getSalary();
+            }
         }
 
         NumberFormat currencyInstance = NumberFormat.getCurrencyInstance();
