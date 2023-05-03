@@ -27,14 +27,7 @@ public class Main {
         Employee employee = null;
 
         while (matcher.find()) {
-
-            employee = switch (matcher.group("role")) {
-                case "Programmer" -> new Programmer(matcher.group());
-                case "Manager" -> new Manager(matcher.group());
-                case "Analyst" -> new Analyst(matcher.group());
-                case "CEO" -> new CEO(matcher.group());
-                default -> null;
-            };
+            employee = Employee.createEmployee(matcher.group());
             if (employee != null) {
                 System.out.println(employee);
                 totalSalaries += employee.getSalary();

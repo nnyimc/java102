@@ -6,7 +6,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public abstract class Employee {
+public abstract class Employee implements IEmployee {
 
     protected String lastName;
     protected String firstName;
@@ -15,8 +15,8 @@ public abstract class Employee {
 
     NumberFormat currencyInstance = NumberFormat.getCurrencyInstance();
 
-    private final  String peopleRegex = "(?<lastName>\\w+),\\s*(?<firstName>\\w+),\\s*(?<dob>\\d{1,2}/\\d{1,2}/\\d{4}),\\s*(?<role>\\w+)(?:,\\s*\\{(?<details>.*)\\})\\n";
-    private final Pattern pattern = Pattern.compile(peopleRegex);
+    private static final String peopleRegex = "(?<lastName>\\w+),\\s*(?<firstName>\\w+),\\s*(?<dob>\\d{1,2}/\\d{1,2}/\\d{4}),\\s*(?<role>\\w+)(?:,\\s*\\{(?<details>.*)\\})\\n";
+    private static final Pattern pattern = Pattern.compile(peopleRegex);
     DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("d/M/yyyy");
 
     public Employee (String line) {
@@ -28,9 +28,24 @@ public abstract class Employee {
         }
     }
 
-    public double getSalary(){
-        return salary;
+    public static final Employee createEmployee(String line) {
+        Matcher matcher = Employee.pattern.matcher(line);
+        if (matcher.find()) {
+            return switch (matcher.group("role")) {
+                case "Programmer" -> new Programmer(matcher.group());
+                case "Manager" -> new Manager(matcher.group());
+                case "Analyst" -> new Analyst(matcher.group());
+                case "CEO" -> new CEO(matcher.group());
+                default -> null;
+            };
+        } else {
+            return null;
+        }
+
     }
+
+    @Override
+    public abstract double getSalary();
 
     @Override
     public String toString() {

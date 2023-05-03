@@ -19,6 +19,7 @@ public class CEO extends Employee {
         }
     }
 
+    @Override
     public double getSalary() {
         return this.salary += Math.pow(salary/avgStockPrice, 3);
     }

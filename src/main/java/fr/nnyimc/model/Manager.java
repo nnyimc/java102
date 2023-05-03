@@ -1,6 +1,5 @@
 package fr.nnyimc.model;
 
-import java.time.format.DateTimeFormatter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -20,6 +19,7 @@ public class Manager extends Employee {
         }
     }
 
+    @Override
     public double getSalary() {
        return salary += Math.pow(salary/organizationSize,2);
     }

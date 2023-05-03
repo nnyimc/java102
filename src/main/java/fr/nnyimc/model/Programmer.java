@@ -22,6 +22,7 @@ public class Programmer extends Employee {
         }
     }
 
+    @Override
     public double getSalary() {
             return this.salary += salary/(linesOfCodePerDay+(iq/experienceYears));
     }

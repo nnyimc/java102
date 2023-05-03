@@ -17,6 +17,7 @@ public class Analyst extends Employee {
 
     }
 
+    @Override
     public double getSalary() {
        return  this.salary += Math.pow(salary/projectCount,1.25);
     }
