@@ -3,7 +3,7 @@ package fr.nnyimc.model;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Programmer extends Employee {
+public class Programmer extends Employee implements Cook {
 
     private double linesOfCodePerDay;
     private double experienceYears;
@@ -20,6 +20,30 @@ public class Programmer extends Employee {
             this.experienceYears = Integer.parseInt(programmerMatcher.group("experienceYears"));
             this.iq = Integer.parseInt(programmerMatcher.group("iq"));
         }
+    }
+
+    public double getLinesOfCodePerDay() {
+        return linesOfCodePerDay;
+    }
+
+    public void setLinesOfCodePerDay(double linesOfCodePerDay) {
+        this.linesOfCodePerDay = linesOfCodePerDay;
+    }
+
+    public double getExperienceYears() {
+        return experienceYears;
+    }
+
+    public void setExperienceYears(double experienceYears) {
+        this.experienceYears = experienceYears;
+    }
+
+    public double getIq() {
+        return iq;
+    }
+
+    public void setIq(double iq) {
+        this.iq = iq;
     }
 
     @Override

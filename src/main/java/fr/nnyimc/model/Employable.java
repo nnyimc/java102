@@ -1,6 +1,6 @@
 package fr.nnyimc.model;
 
-public interface IEmployee {
+public interface Employable {
 
     public double getSalary();
 

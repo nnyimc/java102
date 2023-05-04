@@ -6,7 +6,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public abstract class Employee implements IEmployee {
+public abstract class Employee implements Employable {
 
     protected String lastName;
     protected String firstName;
@@ -16,11 +16,20 @@ public abstract class Employee implements IEmployee {
     NumberFormat currencyInstance = NumberFormat.getCurrencyInstance();
 
     private static final String peopleRegex = "(?<lastName>\\w+),\\s*(?<firstName>\\w+),\\s*(?<dob>\\d{1,2}/\\d{1,2}/\\d{4}),\\s*(?<role>\\w+)(?:,\\s*\\{(?<details>.*)\\})\\n";
-    private static final Pattern pattern = Pattern.compile(peopleRegex);
-    DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("d/M/yyyy");
+    public static final Pattern pattern = Pattern.compile(peopleRegex);
+    protected final  DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("d/M/yyyy");
+
+    protected final Matcher matcher;
+
+    protected Employee() {
+       matcher  = null;
+       firstName = "John";
+       lastName = "Doe";
+       dateOfBirth = null;
+    }
 
     public Employee (String line) {
-        Matcher matcher = pattern.matcher(line);
+        matcher = pattern.matcher(line);
         if (matcher.find()) {
             this.lastName = matcher.group("lastName");
             this.firstName = matcher.group("firstName");
@@ -28,7 +37,7 @@ public abstract class Employee implements IEmployee {
         }
     }
 
-    public static final Employee createEmployee(String line) {
+    public static Employee createEmployee(String line) {
         Matcher matcher = Employee.pattern.matcher(line);
         if (matcher.find()) {
             return switch (matcher.group("role")) {
@@ -36,10 +45,11 @@ public abstract class Employee implements IEmployee {
                 case "Manager" -> new Manager(matcher.group());
                 case "Analyst" -> new Analyst(matcher.group());
                 case "CEO" -> new CEO(matcher.group());
-                default -> null;
+                default -> new FakeEmployee();
             };
         } else {
-            return null;
+            // Consider throwing an exception instead
+            return new FakeEmployee();
         }
 
     }
@@ -50,5 +60,13 @@ public abstract class Employee implements IEmployee {
     @Override
     public String toString() {
         return String.format("%s %s %s", lastName, firstName, currencyInstance.format(getSalary()) );
+    }
+
+    private static final class FakeEmployee extends Employee implements Employable {
+
+        @Override
+        public double getSalary() {
+            return 0;
+        }
     }
 }

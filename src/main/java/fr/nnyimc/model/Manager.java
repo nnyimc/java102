@@ -24,6 +24,10 @@ public class Manager extends Employee {
        return salary += Math.pow(salary/organizationSize,2);
     }
 
+    public int getOrganizationSize() {
+        return organizationSize;
+    }
+
     @Override
     public String toString() {
         return String.format("%s %s %n", super.toString(), organizationSize);

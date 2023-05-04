@@ -17,6 +17,14 @@ public class Analyst extends Employee {
 
     }
 
+    public double getProjectCount() {
+        return projectCount;
+    }
+
+    public void setProjectCount(double projectCount) {
+        this.projectCount = projectCount;
+    }
+
     @Override
     public double getSalary() {
        return  this.salary += Math.pow(salary/projectCount,1.25);
