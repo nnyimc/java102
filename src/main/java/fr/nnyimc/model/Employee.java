@@ -3,13 +3,14 @@ package fr.nnyimc.model;
 import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public abstract class Employee implements Employable {
 
     protected String lastName;
-    protected String firstName;
+    public String firstName;
     protected LocalDate dateOfBirth;
     protected double salary = 3000;
 
@@ -57,9 +58,30 @@ public abstract class Employee implements Employable {
     @Override
     public abstract double getSalary();
 
+
     @Override
     public String toString() {
         return String.format("%s %s %s", lastName, firstName, currencyInstance.format(getSalary()) );
+    }
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (! (object instanceof Employee) )  {
+            return false;
+        }
+        Employee employee = (Employee)  object;
+        return lastName.equals(employee.lastName)
+                //
+               && firstName.equals(employee.firstName)
+               //
+               && dateOfBirth.equals(employee.dateOfBirth);
+
+
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(lastName, firstName, dateOfBirth);
     }
 
     private static final class FakeEmployee extends Employee implements Employable {
